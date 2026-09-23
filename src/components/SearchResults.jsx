@@ -44,7 +44,7 @@ export default function SearchResults({
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-fadeIn">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300 text-sm">
           <Search className="w-4 h-4 text-indigo-500" />
@@ -59,7 +59,7 @@ export default function SearchResults({
         <div className="glass-card rounded-2xl p-8 text-center text-slate-500 border space-y-2">
           <div className="text-3xl">🔍</div>
           <div className="font-semibold text-slate-700 dark:text-slate-300">ไม่พบข้อมูลที่ตรงกับคำค้นหา</div>
-          <p className="text-xs text-slate-400">ลองค้นหาด้วยเลขมาตรา เช่น "ม. 9", "ม. 36" หรือคำว่า "ความใหม่", "ข้อยกเว้น"</p>
+          <p className="text-xs text-slate-400">ลองค้นหาด้วยเลขมาตรา เช่น "ม. 6", "ม. 11", "ม. 31", "ม. 46", "ม. 56" หรือคำว่า "ความใหม่", "สัญญาจ้าง", "ลวงขาย"</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -79,7 +79,7 @@ export default function SearchResults({
                   </span>
                 </div>
                 <div className="text-xs text-indigo-500 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  ไปยังหมวดนี้ <ChevronRight className="w-3.5 h-3.5" />
+                  ไปยังข้อสอบนี้ <ChevronRight className="w-3.5 h-3.5" />
                 </div>
               </div>
 

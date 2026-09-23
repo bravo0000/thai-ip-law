@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   Layers, 
   RotateCw, 
@@ -9,36 +9,42 @@ import {
   RotateCcw, 
   Lightbulb,
   Sparkles,
-  Volume2
+  Volume2,
+  Filter
 } from 'lucide-react';
 import { flashcardsData } from '../data/flashcardsData';
 
 export default function FlashcardViewer({ onPlayAudio }) {
-  const [cards, setCards] = useState(flashcardsData);
+  const [selectedFilter, setSelectedFilter] = useState('all');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [knownCards, setKnownCards] = useState({}); // { cardId: true/false }
 
-  const currentCard = cards[currentIndex];
+  // Filter cards
+  const filteredCards = useMemo(() => {
+    if (selectedFilter === 'all') return flashcardsData;
+    return flashcardsData.filter(c => c.category === selectedFilter);
+  }, [selectedFilter]);
+
+  const currentCard = filteredCards[currentIndex] || filteredCards[0];
 
   const handleNext = () => {
     setIsFlipped(false);
-    setCurrentIndex((prev) => (prev + 1) % cards.length);
+    setCurrentIndex((prev) => (prev + 1) % filteredCards.length);
   };
 
   const handlePrev = () => {
     setIsFlipped(false);
-    setCurrentIndex((prev) => (prev - 1 + cards.length) % cards.length);
+    setCurrentIndex((prev) => (prev - 1 + filteredCards.length) % filteredCards.length);
   };
 
   const handleShuffle = () => {
     setIsFlipped(false);
-    const shuffled = [...cards].sort(() => Math.random() - 0.5);
-    setCards(shuffled);
-    setCurrentIndex(0);
+    setCurrentIndex(Math.floor(Math.random() * filteredCards.length));
   };
 
   const markKnown = (isKnown) => {
+    if (!currentCard) return;
     setKnownCards(prev => ({
       ...prev,
       [currentCard.id]: isKnown
@@ -54,9 +60,9 @@ export default function FlashcardViewer({ onPlayAudio }) {
 
   const handlePlayCardAudio = (e) => {
     e.stopPropagation();
-    if (!onPlayAudio) return;
+    if (!onPlayAudio || !currentCard) return;
     const textToRead = isFlipped
-      ? `เฉลยและหลักเกณฑ์ มาตรา ${currentCard.article}. ${currentCard.back}. ${currentCard.tip ? 'ข้อสังเกต: ' + currentCard.tip : ''}`
+      ? `เฉลยและหลักเกณฑ์ มาตรา ${currentCard.article}. ${currentCard.back}. ${currentCard.tip ? 'สูตรจำ: ' + currentCard.tip : ''}`
       : `คำถาม: ${currentCard.front}. มาตราที่เกี่ยวข้อง ${currentCard.article}`;
     onPlayAudio(textToRead, `Flashcard: ${currentCard.categoryLabel}`);
   };
@@ -76,11 +82,11 @@ export default function FlashcardViewer({ onPlayAudio }) {
                 <Layers className="w-5 h-5" />
               </div>
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-                Flashcards ท่องจำหลักเกณฑ์ & มาตราสำคัญ
+                Flashcards ท่องจำ 3 เสาหลักข้อสอบ (23 มาตรา)
               </h2>
             </div>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-              คลิกที่การ์ดเพื่อพลิกดูเฉลย หรือกดปุ่มลำโพงเพื่อฟังเสียงอ่านฝึกความจำ
+              คลิกที่การ์ดเพื่อพลิกดูเฉลยและสูตรช่วยจำ หรือกดปุ่มลำโพงเพื่อฟังเสียงอ่านภาษาไทย
             </p>
           </div>
 
@@ -90,7 +96,7 @@ export default function FlashcardViewer({ onPlayAudio }) {
               onClick={handleShuffle}
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
             >
-              <Shuffle className="w-3.5 h-3.5" /> สับการ์ด
+              <Shuffle className="w-3.5 h-3.5" /> สุ่มการ์ด
             </button>
             <button
               onClick={resetProgress}
@@ -101,130 +107,154 @@ export default function FlashcardViewer({ onPlayAudio }) {
           </div>
         </div>
 
-        {/* Progress Counters */}
-        <div className="flex items-center gap-4 mt-4 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs">
-          <div className="text-slate-500">
-            การ์ดที่ <span className="font-bold text-slate-900 dark:text-white">{currentIndex + 1}</span> จาก {cards.length}
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap gap-2 mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">
+          {[
+            { id: 'all', label: 'ทั้งหมด (24 ใบ)' },
+            { id: 'q1', label: 'ข้อ 1: สิทธิบัตรการประดิษฐ์ (9 ใบ)' },
+            { id: 'q2', label: 'ข้อ 2: การออกแบบ & สัญญาจ้าง (7 ใบ)' },
+            { id: 'q3', label: 'ข้อ 3: เครื่องหมายการค้า (8 ใบ)' }
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setSelectedFilter(tab.id);
+                setCurrentIndex(0);
+                setIsFlipped(false);
+              }}
+              className={`text-xs px-3 py-1.5 rounded-xl font-medium transition-all ${
+                selectedFilter === tab.id
+                  ? 'bg-purple-600 text-white shadow-sm'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Learning Stats Bar */}
+        <div className="flex items-center gap-4 mt-4 text-xs">
+          <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium">
+            <CheckCircle2 className="w-4 h-4" /> จำได้แล้ว: {knownCount}
           </div>
-          <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-semibold">
-            <CheckCircle2 className="w-3.5 h-3.5" /> จำได้แล้ว: {knownCount}
+          <div className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 font-medium">
+            <RotateCw className="w-4 h-4" /> ต้องทบทวนซ้ำ: {reviewCount}
           </div>
-          <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-semibold">
-            <RotateCw className="w-3.5 h-3.5" /> ต้องทบทวน: {reviewCount}
+          <div className="text-slate-400 dark:text-slate-500 ml-auto font-mono">
+            การ์ดที่ {filteredCards.length > 0 ? currentIndex + 1 : 0} / {filteredCards.length}
           </div>
         </div>
       </div>
 
-      {/* Interactive 3D Card */}
-      <div 
-        onClick={() => setIsFlipped(!isFlipped)}
-        className="w-full h-80 sm:h-96 cursor-pointer perspective-1000 select-none group relative"
-      >
-        <div className={`relative w-full h-full duration-500 transform-style-preserve-3d transition-transform ${isFlipped ? 'rotate-y-180' : ''}`}>
-          
-          {/* Front of Card */}
-          <div className="absolute inset-0 backface-hidden glass-card rounded-3xl p-8 flex flex-col justify-between border-2 border-indigo-200 dark:border-indigo-800/80 shadow-lg bg-gradient-to-br from-white via-indigo-50/20 to-white dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950/30">
+      {/* 3D Flashcard Container */}
+      {currentCard && (
+        <div className="perspective-1000">
+          <div
+            onClick={() => setIsFlipped(!isFlipped)}
+            className={`w-full min-h-[360px] glass-card rounded-3xl p-8 cursor-pointer relative transition-all duration-300 transform-style-3d border shadow-lg hover:shadow-xl flex flex-col justify-between select-none ${
+              isFlipped 
+                ? 'border-purple-300 dark:border-purple-800/80 bg-gradient-to-br from-purple-50/70 via-white to-indigo-50/70 dark:from-purple-950/40 dark:via-slate-900 dark:to-indigo-950/40' 
+                : 'border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90'
+            }`}
+          >
+            {/* Card Top Banner */}
             <div className="flex items-center justify-between">
-              <span className="text-xs px-3 py-1 font-semibold rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
-                {currentCard.categoryLabel} ({currentCard.article})
-              </span>
               <div className="flex items-center gap-2">
-                <button
-                  onClick={handlePlayCardAudio}
-                  title="ฟังเสียงอ่านคำถาม"
-                  className="p-1.5 rounded-lg text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950 hover:bg-indigo-100 transition-colors"
-                >
-                  <Volume2 className="w-4 h-4" />
-                </button>
-                <span className="text-xs text-slate-400 flex items-center gap-1">
-                  <RotateCw className="w-3.5 h-3.5" /> แตะเพื่อพลิก
+                <span className="text-xs px-2.5 py-1 rounded-full font-bold bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                  {currentCard.categoryLabel}
+                </span>
+                <span className="text-xs px-2.5 py-1 rounded-full font-mono font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                  {currentCard.article}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {onPlayAudio && (
+                  <button
+                    onClick={handlePlayCardAudio}
+                    title="ฟังเสียงอ่านข้อความในการ์ด"
+                    className="p-2 rounded-xl text-slate-500 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/50 transition-colors"
+                  >
+                    <Volume2 className="w-5 h-5" />
+                  </button>
+                )}
+                <span className="text-xs text-slate-400 font-medium flex items-center gap-1">
+                  <RotateCw className="w-3.5 h-3.5" /> คลิกเพื่อพลิก
                 </span>
               </div>
             </div>
 
-            <div className="text-center px-4 space-y-3">
-              <span className="text-xs uppercase font-bold tracking-widest text-indigo-500">คำถาม / ประเด็นทดสอบ</span>
-              <h3 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white leading-relaxed">
-                {currentCard.front}
-              </h3>
-            </div>
-
-            <div className="text-center text-xs text-slate-400">
-              💡 คลิกเพื่อดูคำตอบและหลักมาตรา
-            </div>
-          </div>
-
-          {/* Back of Card (Flipped) */}
-          <div className="absolute inset-0 backface-hidden rotate-y-180 glass-card rounded-3xl p-8 flex flex-col justify-between border-2 border-emerald-300 dark:border-emerald-700/80 shadow-lg bg-gradient-to-br from-white via-emerald-50/20 to-white dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/30">
-            <div className="flex items-center justify-between">
-              <span className="text-xs px-3 py-1 font-semibold rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-                เฉลยและหลักเกณฑ์ ({currentCard.article})
-              </span>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handlePlayCardAudio}
-                  title="ฟังเสียงอ่านเฉลย"
-                  className="p-1.5 rounded-lg text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950 hover:bg-emerald-100 transition-colors"
-                >
-                  <Volume2 className="w-4 h-4" />
-                </button>
-                <span className="text-xs text-slate-400 flex items-center gap-1">
-                  <RotateCw className="w-3.5 h-3.5" /> แตะเพื่อพลิกกลับ
-                </span>
-              </div>
-            </div>
-
-            <div className="space-y-4 my-auto overflow-y-auto max-h-48 pr-2">
-              <div className="text-sm sm:text-base text-slate-800 dark:text-slate-200 whitespace-pre-line leading-relaxed font-medium">
-                {currentCard.back}
-              </div>
-
-              {currentCard.tip && (
-                <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2">
-                  <Lightbulb className="w-4 h-4 shrink-0 mt-0.5" />
-                  <span><strong>Tip สอบ:</strong> {currentCard.tip}</span>
+            {/* Card Content Area */}
+            <div className="my-8 flex flex-col justify-center items-center text-center px-4">
+              {!isFlipped ? (
+                <div className="space-y-4 animate-fadeIn">
+                  <span className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">
+                    คำถามสำคัญ
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug max-w-2xl">
+                    {currentCard.front}
+                  </h3>
+                </div>
+              ) : (
+                <div className="space-y-4 animate-fadeIn">
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                    เฉลย & สาระสำคัญ
+                  </span>
+                  <p className="text-base sm:text-lg text-slate-800 dark:text-slate-100 whitespace-pre-line leading-relaxed max-w-2xl font-medium">
+                    {currentCard.back}
+                  </p>
+                  {currentCard.tip && (
+                    <div className="mt-4 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-xs sm:text-sm text-amber-900 dark:text-amber-200 flex items-center gap-2 text-left">
+                      <Lightbulb className="w-4 h-4 text-amber-600 shrink-0" />
+                      <span>{currentCard.tip}</span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
 
-            <div className="text-center text-xs text-slate-400">
-              มาตราอ้างอิง: {currentCard.article}
+            {/* Card Footer Indicators */}
+            <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400">
+              <span>{isFlipped ? "💡 ด้านหลัง (คำตอบ/สูตรจำ)" : "❓ ด้านหน้า (โจทย์คำถาม)"}</span>
+              <span className="font-mono">{currentIndex + 1} / {filteredCards.length}</span>
             </div>
           </div>
-
         </div>
-      </div>
+      )}
 
-      {/* Control Buttons */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handlePrev}
-            className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" /> ก่อนหน้า
-          </button>
-          <button
-            onClick={handleNext}
-            className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
-          >
-            ถัดไป <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Self-Assessment Buttons */}
-        <div className="flex items-center gap-2">
+      {/* Bottom Action Controls */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <button
             onClick={() => markKnown(false)}
-            className="px-4 py-2 text-xs font-semibold rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 dark:bg-amber-950 dark:hover:bg-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800 transition-colors"
+            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl border border-amber-200 dark:border-amber-800/80 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
           >
-            ยังจำไม่ได้ (ทบทวนอีกครั้ง)
+            <RotateCw className="w-4 h-4" /> ยังจำไม่ได้ (ทบทวนซ้ำ)
           </button>
           <button
             onClick={() => markKnown(true)}
-            className="px-4 py-2 text-xs font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20 transition-all"
+            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800/80 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
           >
-            จำได้แล้วแม่นยำ ✅
+            <CheckCircle2 className="w-4 h-4" /> จำได้แม่นยำแล้ว
+          </button>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handlePrev}
+            className="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors shadow-sm"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 font-mono">
+            {currentIndex + 1} / {filteredCards.length}
+          </span>
+          <button
+            onClick={handleNext}
+            className="p-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white transition-colors shadow-md shadow-indigo-500/20"
+          >
+            <ChevronRight className="w-5 h-5" />
           </button>
         </div>
       </div>

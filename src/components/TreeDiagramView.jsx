@@ -16,32 +16,29 @@ import {
   HelpCircle,
   Tag,
   Palette,
-  Wrench,
   Lightbulb,
   ExternalLink,
-  ArrowRight
+  ArrowRight,
+  Target
 } from 'lucide-react';
 import { ipLawTreeData } from '../data/treeData';
 
 export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleModal, onPlayAudio }) {
   const [filterQuery, setFilterQuery] = useState('');
-  const [selectedBranch, setSelectedBranch] = useState('all'); // 'all', 'patent-branch', 'trademark-branch', 'copyright-branch'
+  const [selectedBranch, setSelectedBranch] = useState('all'); // 'all', 'node-q1', 'node-q2', 'node-q3'
   
   // State for tracking expanded/collapsed nodes
   const [expandedNodes, setExpandedNodes] = useState({
     'root': true,
-    'patent-branch': true,
-    'trademark-branch': true,
-    'copyright-branch': true,
-    'node-invention': true,
-    'node-petty': true,
-    'node-design': true,
-    'node-patent-common': false,
-    'node-tm-types': true,
-    'node-tm-gatekeepers': true,
-    'node-tm-flow-rights': false,
-    'node-cr-works': true,
-    'node-cr-rights-exceptions': true
+    'node-q1': true,
+    'node-q2': true,
+    'node-q3': true,
+    'node-q1-requirements': true,
+    'node-q1-enforcement': true,
+    'node-q2-design-req': true,
+    'node-q2-employee-opp': true,
+    'node-q3-gatekeepers': true,
+    'node-q3-rights-cancellation': true
   });
 
   const toggleNode = (nodeId) => {
@@ -52,11 +49,16 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
   };
 
   const expandAll = () => {
-    const all = { 'root': true, 'patent-branch': true, 'trademark-branch': true, 'copyright-branch': true };
+    const all = { 'root': true };
     ipLawTreeData.children.forEach(branch => {
       all[branch.id] = true;
       if (branch.children) {
-        branch.children.forEach(sub => all[sub.id] = true);
+        branch.children.forEach(sub => {
+          all[sub.id] = true;
+          if (sub.children) {
+            sub.children.forEach(leaf => all[leaf.id] = true);
+          }
+        });
       }
     });
     setExpandedNodes(all);
@@ -79,17 +81,6 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
           line: 'border-indigo-500/50 dark:border-indigo-500/40',
           dot: 'bg-indigo-500 ring-indigo-200 dark:ring-indigo-900',
           btn: 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/20'
-        };
-      case 'emerald':
-        return {
-          bg: 'bg-emerald-50/70 dark:bg-emerald-950/40',
-          border: 'border-emerald-200 dark:border-emerald-800',
-          hoverBorder: 'hover:border-emerald-400 dark:hover:border-emerald-600',
-          text: 'text-emerald-700 dark:text-emerald-300',
-          badge: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/80 dark:text-emerald-300 border-emerald-200 dark:border-emerald-700',
-          line: 'border-emerald-500/50 dark:border-emerald-500/40',
-          dot: 'bg-emerald-500 ring-emerald-200 dark:ring-emerald-900',
-          btn: 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20'
         };
       case 'amber':
         return {
@@ -114,18 +105,6 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
           line: 'border-rose-500/50 dark:border-rose-500/40',
           dot: 'bg-rose-500 ring-rose-200 dark:ring-rose-900',
           btn: 'bg-rose-600 hover:bg-rose-500 text-white shadow-rose-600/20'
-        };
-      case 'purple':
-      case 'fuchsia':
-        return {
-          bg: 'bg-purple-50/70 dark:bg-purple-950/40',
-          border: 'border-purple-200 dark:border-purple-800',
-          hoverBorder: 'hover:border-purple-400 dark:hover:border-purple-600',
-          text: 'text-purple-700 dark:text-purple-300',
-          badge: 'bg-purple-100 text-purple-800 dark:bg-purple-900/80 dark:text-purple-300 border-purple-200 dark:border-purple-700',
-          line: 'border-purple-500/50 dark:border-purple-500/40',
-          dot: 'bg-purple-500 ring-purple-200 dark:ring-purple-900',
-          btn: 'bg-purple-600 hover:bg-purple-500 text-white shadow-purple-600/20'
         };
       default:
         return {
@@ -173,10 +152,10 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-                  แผนภูมิต้นไม้เชื่อมโยงกฎหมาย (Interactive Mind Map & Tree Flow)
+                  ผังตรรกะเชื่อมโยง 3 ข้อสอบ (Interactive Mind Map)
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
-                  ผังเส้นโยงเชื่อมโยงตัวบทมาตรา 3 เสาหลัก พร้อมคลิก <strong>'ไปยังหมวดกฎหมายหลัก'</strong> ได้ทันที
+                  แผนภูมิความเชื่อมโยงของ 23 มาตราแม่บท พร้อมปุ่มคลิกข้ามไปยังข้อสอบนั้นได้ทันที
                 </p>
               </div>
             </div>
@@ -210,37 +189,37 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200'
               }`}
             >
-              🌳 แสดงผังทั้ง 3 เสาหลัก
+              🌳 แสดงผังทั้ง 3 ข้อสอบ
             </button>
             <button
-              onClick={() => setSelectedBranch('patent-branch')}
+              onClick={() => setSelectedBranch('node-q1')}
               className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-                selectedBranch === 'patent-branch'
-                  ? 'bg-blue-600 text-white shadow-sm font-semibold'
+                selectedBranch === 'node-q1'
+                  ? 'bg-indigo-600 text-white shadow-sm font-semibold'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200'
               }`}
             >
-              🛡️ สิทธิบัตร 3 ประเภท
+              🥇 ข้อ 1: สิทธิบัตรการประดิษฐ์
             </button>
             <button
-              onClick={() => setSelectedBranch('trademark-branch')}
+              onClick={() => setSelectedBranch('node-q2')}
               className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-                selectedBranch === 'trademark-branch'
+                selectedBranch === 'node-q2'
+                  ? 'bg-amber-600 text-white shadow-sm font-semibold'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200'
+              }`}
+            >
+              🥈 ข้อ 2: การออกแบบ & สัญญาจ้าง
+            </button>
+            <button
+              onClick={() => setSelectedBranch('node-q3')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+                selectedBranch === 'node-q3'
                   ? 'bg-rose-600 text-white shadow-sm font-semibold'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200'
               }`}
             >
-              🏷️ เครื่องหมายการค้า
-            </button>
-            <button
-              onClick={() => setSelectedBranch('copyright-branch')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-                selectedBranch === 'copyright-branch'
-                  ? 'bg-purple-600 text-white shadow-sm font-semibold'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200'
-              }`}
-            >
-              📖 ลิขสิทธิ์
+              🥉 ข้อ 3: เครื่องหมายการค้า
             </button>
           </div>
 
@@ -251,7 +230,7 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
               type="text"
               value={filterQuery}
               onChange={(e) => setFilterQuery(e.target.value)}
-              placeholder="ค้นหาจุดสำคัญ เช่น '12 เดือน', 'อาญาแผ่นดิน'..."
+              placeholder="ค้นหาจุดสำคัญ เช่น 'Grace Period', 'ม. 11'..."
               className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100"
             />
           </div>
@@ -292,19 +271,18 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
           )}
         </div>
 
-        {/* Level 1: Main Branches (สิทธิบัตร, เครื่องหมายการค้า, ลิขสิทธิ์) */}
+        {/* Level 1: Main Branches (ข้อ 1, ข้อ 2, ข้อ 3) */}
         {expandedNodes['root'] && (
           <div className="space-y-10 relative z-10">
-            {branchesToRender.map((branch, bIndex) => {
+            {branchesToRender.map((branch) => {
               const bStyle = getColorStyles(branch.color);
               const isBranchExpanded = expandedNodes[branch.id];
 
               return (
                 <div key={branch.id} className="relative space-y-4">
                   
-                  {/* Branch Node Header Card with Tree Connecting Trunk */}
+                  {/* Branch Node Header Card */}
                   <div className="flex items-center gap-3">
-                    {/* Visual branch node indicator point */}
                     <div className={`w-3.5 h-3.5 rounded-full ${bStyle.dot} ring-4 shrink-0 shadow-sm`} />
 
                     <div 
@@ -330,123 +308,72 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
                         </div>
                       </div>
 
-                      {/* Quick Navigate to Category Button */}
+                      {/* Quick Navigate Button */}
                       <div className="flex items-center gap-2 self-end sm:self-center">
                         <button
                           onClick={(e) => handleNavigate(e, branch.targetCategory)}
                           className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl ${bStyle.btn} transition-all duration-200 shadow-sm hover:scale-105`}
                         >
-                          <span>เปิดหมวดนี้</span>
+                          <span>เปิดข้อสอบนี้</span>
                           <ArrowRight className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>
                   </div>
 
-                  {/* Level 2: Sub-Nodes with Tree Connector Line Branches */}
+                  {/* Level 2: Sub-branches */}
                   {isBranchExpanded && branch.children && (
-                    <div className="relative ml-1.5 sm:ml-2 pl-4 sm:pl-7 border-l-2 border-dashed border-slate-300 dark:border-slate-700 space-y-4 pt-1">
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {branch.children.map((sub) => {
-                          const subStyle = getColorStyles(sub.color);
-                          const isSubExpanded = expandedNodes[sub.id];
+                    <div className="ml-5 sm:ml-8 pl-4 sm:pl-6 border-l-2 border-slate-300 dark:border-slate-700 space-y-4">
+                      {branch.children.map((subNode) => {
+                        const sStyle = getColorStyles(subNode.color || branch.color);
+                        const isSubExpanded = expandedNodes[subNode.id];
 
-                          // Search filter matching
-                          const matchesQuery = filterQuery === '' || 
-                            sub.title.toLowerCase().includes(filterQuery.toLowerCase()) ||
-                            sub.subtitle.toLowerCase().includes(filterQuery.toLowerCase()) ||
-                            (sub.articles && sub.articles.some(a => a.toLowerCase().includes(filterQuery.toLowerCase()))) ||
-                            (sub.keyPoints && sub.keyPoints.some(p => p.toLowerCase().includes(filterQuery.toLowerCase())));
-
-                          if (!matchesQuery) return null;
-
-                          return (
+                        return (
+                          <div key={subNode.id} className="space-y-3">
                             <div 
-                              key={sub.id}
-                              className={`glass-card rounded-2xl p-5 border ${subStyle.border} ${subStyle.bg} ${subStyle.hoverBorder} hover:shadow-lg transition-all space-y-3.5 relative group`}
+                              onClick={() => toggleNode(subNode.id)}
+                              className={`cursor-pointer glass-card p-4 rounded-xl border ${sStyle.border} ${sStyle.bg} hover:border-slate-400 transition-all`}
                             >
-                              {/* Horizontal connector stem arm from left border */}
-                              <div className="hidden sm:block absolute -left-7 top-7 w-5 h-0.5 border-t-2 border-dashed border-slate-300 dark:border-slate-700" />
-                              <div className="hidden sm:block absolute -left-2.5 top-6 w-2 h-2 rounded-full bg-indigo-400 dark:bg-indigo-600" />
-
-                              {/* Sub-node Card Header */}
-                              <div className="flex items-start justify-between gap-2 border-b border-slate-200/70 dark:border-slate-800/70 pb-3">
-                                <div>
-                                  <h5 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">
-                                    {sub.title}
+                              <div className="flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-2">
+                                  <div className={`p-1.5 rounded-lg bg-white dark:bg-slate-800 ${sStyle.text}`}>
+                                    {isSubExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                                  </div>
+                                  <h5 className="font-bold text-sm text-slate-900 dark:text-white">
+                                    {subNode.title}
                                   </h5>
-                                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                                    {sub.subtitle}
-                                  </p>
                                 </div>
 
-                                <div className="flex items-center gap-1.5 shrink-0">
-                                  <span className={`text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full font-mono font-semibold border ${subStyle.badge}`}>
-                                    {sub.badge}
-                                  </span>
-                                  {onPlayAudio && (
-                                    <button
-                                      onClick={(e) => handleReadNode(e, sub)}
-                                      title="ฟังเสียงสรุป"
-                                      className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-white dark:hover:bg-slate-800 transition-colors shadow-2xs"
+                                <div className="flex items-center gap-1">
+                                  {subNode.articles && subNode.articles.map((art, aIdx) => (
+                                    <span 
+                                      key={aIdx}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        onOpenArticleModal && onOpenArticleModal(art);
+                                      }}
+                                      className="text-[11px] px-2 py-0.5 rounded bg-white dark:bg-slate-800 font-mono text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 border border-slate-200 dark:border-slate-700"
                                     >
-                                      <Volume2 className="w-4 h-4" />
-                                    </button>
-                                  )}
-                                </div>
-                              </div>
-
-                              {/* Core Articles with Click-to-Jump Link */}
-                              {sub.articles && (
-                                <div className="space-y-1.5">
-                                  <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                                    <Scale className="w-3.5 h-3.5 text-indigo-500" />
-                                    <span>มาตราอ้างอิงหลัก (คลิกเพื่อกระโดดไปยังหมวดนี้):</span>
-                                  </div>
-                                  <div className="flex flex-wrap items-center gap-1.5">
-                                    {sub.articles.map((art, aIdx) => (
-                                      <button
-                                        key={aIdx}
-                                        onClick={(e) => handleNavigate(e, sub.targetCategory)}
-                                        title={`คลิกเพื่อไปยัง ${sub.categoryName} (${art})`}
-                                        className="text-xs px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-mono font-semibold border border-indigo-200 dark:border-indigo-800 shadow-xs hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white transition-all transform hover:-translate-y-0.5"
-                                      >
-                                        {art} ↗
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* Key Points Bullet List */}
-                              {sub.keyPoints && (
-                                <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-white/70 dark:bg-slate-800/60 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 shadow-2xs">
-                                  {sub.keyPoints.map((point, pIdx) => (
-                                    <li key={pIdx} className="flex items-start gap-2">
-                                      <span className="text-indigo-500 font-bold shrink-0 mt-0.5">•</span>
-                                      <span>{point}</span>
-                                    </li>
+                                      {art}
+                                    </span>
                                   ))}
-                                </ul>
-                              )}
-
-                              {/* Direct Jump Button to Main Law Category */}
-                              <div className="pt-1 flex justify-end">
-                                <button
-                                  onClick={(e) => handleNavigate(e, sub.targetCategory)}
-                                  className={`w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold ${subStyle.btn} transition-all shadow-sm`}
-                                >
-                                  <span>📖 อ่านเนื้อหาเต็มในหมวด {sub.categoryName}</span>
-                                  <ExternalLink className="w-3.5 h-3.5" />
-                                </button>
+                                </div>
                               </div>
 
+                              {isSubExpanded && subNode.keyPoints && (
+                                <div className="mt-3 pt-3 border-t border-slate-200/60 dark:border-slate-700/60 space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
+                                  {subNode.keyPoints.map((pt, pIdx) => (
+                                    <div key={pIdx} className="flex items-start gap-2">
+                                      <span className="text-indigo-500 font-bold">•</span>
+                                      <span className="leading-relaxed">{pt}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
                             </div>
-                          );
-                        })}
-                      </div>
-
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
 
@@ -457,7 +384,6 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
         )}
 
       </div>
-
     </div>
   );
 }
