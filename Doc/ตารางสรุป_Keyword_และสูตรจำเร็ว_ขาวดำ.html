@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ตารางสรุป Keyword & สูตรท่องจำเร็วแม่บท (สอบ 26 ก.ย. 69)</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 10mm 10mm 12mm 10mm;
+  }
+  
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  body {
+    font-family: 'Sarabun', 'TH Sarabun New', 'Leelawadee UI', 'Tahoma', sans-serif;
+    color: #000000;
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    font-size: 11.5pt;
+    line-height: 1.35;
+  }
+
+  /* Document Header */
+  .doc-header {
+    text-align: center;
+    border-bottom: 2.5px solid #000000;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .doc-title {
+    font-size: 16pt;
+    font-weight: bold;
+    margin: 0 0 4px 0;
+    letter-spacing: 0.2px;
+  }
+  
+  .doc-subtitle {
+    font-size: 11pt;
+    font-weight: normal;
+    margin: 0 0 3px 0;
+  }
+  
+  .doc-meta {
+    font-size: 9.5pt;
+    font-weight: normal;
+    color: #222222;
+  }
+
+  /* Section Title */
+  .section-header {
+    margin-top: 14px;
+    margin-bottom: 6px;
+    padding: 4px 8px;
+    background-color: #f0f0f0;
+    border: 1.5px solid #000000;
+    border-left: 6px solid #000000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    page-break-after: avoid;
+  }
+  
+  .section-title {
+    font-size: 12pt;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .section-badge {
+    font-size: 9.5pt;
+    font-weight: bold;
+    border: 1px solid #000000;
+    padding: 1px 6px;
+    background: #ffffff;
+  }
+
+  /* Standard B&W Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    border: 1.5px solid #000000;
+    page-break-inside: auto;
+  }
+  
+  thead {
+    display: table-header-group;
+  }
+  
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  
+  th {
+    border: 1px solid #000000;
+    background-color: #e5e5e5;
+    color: #000000;
+    font-weight: bold;
+    font-size: 10pt;
+    padding: 6px 4px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  td {
+    border: 1px solid #444444;
+    padding: 5px 6px;
+    font-size: 9.5pt;
+    vertical-align: top;
+    line-height: 1.35;
+  }
+  
+  .row-even {
+    background-color: #fafafa;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .article-badge {
+    font-weight: bold;
+    font-size: 10.5pt;
+    display: block;
+    white-space: nowrap;
+  }
+  
+  .formula-text {
+    font-weight: bold;
+    color: #000000;
+    display: block;
+    background-color: #f3f3f3;
+    padding: 2px 4px;
+    border-left: 2.5px solid #000000;
+    margin-bottom: 3px;
+    font-size: 9pt;
+  }
+  
+  .bullet-list {
+    margin: 0;
+    padding-left: 14px;
+  }
+  
+  .bullet-list li {
+    margin-bottom: 2px;
+  }
+  
+  .trap-box {
+    border: 1px dashed #000000;
+    padding: 3px 5px;
+    font-size: 8.5pt;
+    background-color: #ffffff;
+    margin-top: 2px;
+  }
+
+  .trap-title {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  /* Blueprint Box */
+  .blueprint-card {
+    border: 1.5px solid #000000;
+    padding: 8px 12px;
+    margin-top: 14px;
+    background-color: #fafafa;
+    page-break-inside: avoid;
+  }
+  
+  .blueprint-title {
+    font-size: 11pt;
+    font-weight: bold;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+  }
+
+  .blueprint-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    font-size: 9pt;
+  }
+  
+  .blueprint-step {
+    border: 1px solid #777777;
+    padding: 5px 8px;
+    background: #ffffff;
+  }
+  
+  .blueprint-step strong {
+    display: block;
+    font-size: 9.5pt;
+    margin-bottom: 2px;
+  }
+
+  .footer-notice {
+    text-align: center;
+    font-size: 8.5pt;
+    color: #444444;
+    margin-top: 12px;
+    border-top: 1px solid #cccccc;
+    padding-top: 4px;
+  }
+  
+  .page-break {
+    page-break-before: always;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="doc-title">สรุปแม่บท Keyword & สูตรท่องจำเร็ว 3 เสาหลักข้อสอบ</div>
+    <div class="doc-subtitle">วิชา กฎหมายทรัพย์สินทางปัญญา (สอบ 26 กันยายน 2569) • ตรงตามคำชี้แจงสอบ 100% (24 มาตรา)</div>
+    <div class="doc-meta">พ.ร.บ. สิทธิบัตร พ.ศ. 2522 (แก้ไขเพิ่มเติม) & พ.ร.บ. เครื่องหมายการค้า พ.ศ. 2534 (แก้ไขเพิ่มเติม) • รูปแบบเอกสารพิมพ์ขาว-ดำ</div>
+  </div>
+
+  <!-- ==================== ข้อ 1 ==================== -->
+  <div class="section-header">
+    <span class="section-title">ข้อ 1: พ.ร.บ. สิทธิบัตร พ.ศ. 2522 — สิทธิบัตรการประดิษฐ์ (9 มาตรา)</span>
+    <span class="section-badge">ม. 5, 6, 7, 8, 28, 31, 35 ทวิ, 36, 54</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 11%;">มาตรา</th>
+        <th style="width: 17%;">หัวข้อ / สาระสำคัญ</th>
+        <th style="width: 19%;">สูตรท่องจำเร็ว</th>
+        <th style="width: 35%;">คีย์เวิร์ดองค์ประกอบกฎหมาย & หลักการวินิจฉัย</th>
+        <th style="width: 18%;">ฎีกาสำคัญ / จุดตัดเกรด</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 5</span></td>
+        <td><strong>หลักเกณฑ์ 3 ประการ</strong><br>ของการขอรับสิทธิบัตร</td>
+        <td><span class="formula-text">"ใหม่ - สูง - อุต"</span>(ครบทั้ง 3 ข้อพร้อมกัน)</td>
+        <td>
+          <ul class="bullet-list">
+            <li>(1) เป็นการประดิษฐ์ขึ้น<strong>ใหม่</strong> (ตาม ม.6)</li>
+            <li>(2) มี<strong>ขั้นการประดิษฐ์สูงขึ้น</strong> (ตาม ม.7)</li>
+            <li>(3) สามารถ<strong>ประยุกต์ในทางอุตสาหกรรม</strong>ได้ (ตาม ม.8)</li>
+            <li>ไม่อยู่ในข้อยกเว้นสิ่งประดิษฐ์ต้องห้ามตาม ม.9</li>
+          </ul>
+        </td>
+        <td>ขาดข้อใดข้อหนึ่งไม่ได้ หากขาดความใหม่หรือขั้นสูง ย่อมขอรับสิทธิบัตรไม่ได้ทันที</td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 6</span></td>
+        <td><strong>การประดิษฐ์ขึ้นใหม่</strong><br>& งานปรากฏอยู่แล้ว 5 อนุ</td>
+        <td><span class="formula-text">"ไม่เป็นงานที่ปรากฏอยู่แล้ว 5 อนุ"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>(1) มี/ใช้แพร่หลายในราชอาณาจักรก่อนวันยื่นขอ</li>
+            <li>(2) เปิดเผยสาระสำคัญ/เอกสาร/สิ่งพิมพ์/สื่อทั้งในหรือนอก ปท.</li>
+            <li>(3) ได้รับสิทธิบัตร/อนุสิทธิบัตรแล้วทั้งในหรือนอก ปท.</li>
+            <li>(4) ขอนอก ปท. เกิน 18 เดือนแต่ยังไม่ออกให้</li>
+            <li>(5) มีคำขอและประกาศโฆษณาในไทยแล้ว</li>
+          </ul>
+        </td>
+        <td>
+          <strong>ฎีกา 934/2549 (Sea Walker)</strong><br>
+          นำออกให้บริการแก่นักท่องเที่ยวทั่วไปก่อนวันยื่นขอ = แพร่หลายแล้ว เสียความใหม่
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 6 ว.ท้าย</span></td>
+        <td><strong>ข้อยกเว้นความใหม่ 12 ด.</strong><br>(Grace Period)</td>
+        <td><span class="formula-text">"ได้มามิชอบ / นิทรรศการรัฐ + ยื่นขอใน 12 เดือน"</span></td>
+        <td>
+          เปิดเผยก่อนยื่นขอ ไม่ทำให้เสียความใหม่ หากครบ 2 เงื่อนไข:
+          <ul class="bullet-list">
+            <li>เหตุเกิดจาก (1) การกระทำมิชอบด้วยกฎหมาย (ถูกขโมย/ละเมิดความลับ) หรือ (2) ผู้ประดิษฐ์นำไปแสดงในงานแสดงสินค้าระหว่างประเทศ/งานทางการของรัฐ</li>
+            <li>และได้ยื่นคำขอรับสิทธิบัตร<strong>ภายใน 12 เดือน</strong>นับแต่วันเปิดเผย</li>
+          </ul>
+        </td>
+        <td>
+          <div class="trap-box">
+            <span class="trap-title">⚠️ หลุมพรางใหญ่:</span><br>
+            แสดงในงานแสดงสินค้าของ<strong>สมาคมเอกชน</strong> แม้ยังไม่ถึง 12 ด. ก็<strong>เสียความใหม่ทันที</strong> ไม่ได้รับยกเว้น! (ฎ.4518/2550)
+          </div>
+        </td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 7</span></td>
+        <td><strong>ขั้นการประดิษฐ์สูงขึ้น</strong><br>(Inventive Step)</td>
+        <td><span class="formula-text">"ไม่ประจักษ์โดยง่ายแก่นักวิชาการ/ช่างสามัญ"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>เกณฑ์บุคคลที่มีความชำนาญระดับสามัญ (Person Skilled in the Art)</li>
+            <li>ต้องมีคุณลักษณะทางเทคนิคก้าวหน้า มิใช่แค่นำของเดิม 2 สิ่งมาต่อกันธรรมดา หรือเปลี่ยนเพียงวัสดุภายนอก</li>
+          </ul>
+        </td>
+        <td><strong>ฎีกา 1228/2544</strong><br>นำตะแกรง 2 ชั้นมาซ้อนกันโดยกลไกธรรมดา ไม่ถือว่ามีขั้นการประดิษฐ์สูงขึ้น</td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 8</span></td>
+        <td><strong>การประยุกต์ทางอุตฯ</strong><br>(Industrial Applicability)</td>
+        <td><span class="formula-text">"ผลิตหรือใช้ได้จริงในอุตสาหกรรม/เกษตร/หัตถกรรม/พาณิชย์"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>สามารถนำไปใช้ในการผลิตทางอุตสาหกรรม เกษตรกรรม หัตถกรรม หรือพาณิชยกรรมได้จริง</li>
+            <li>ต้องผลิตซ้ำได้จริงในเชิงปฏิบัติ มิใช่แค่ทฤษฎีฝัน</li>
+          </ul>
+        </td>
+        <td>แนวคิดเชิงทฤษฎีบริสุทธิ์หรือหลักคณิตศาสตร์ที่นำไปผลิตจริงไม่ได้ ขาดคุณสมบัติตาม ม.8</td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 28</span></td>
+        <td><strong>การประกาศโฆษณาคำขอ</strong></td>
+        <td><span class="formula-text">"ตรวจคำขอถูกต้อง ให้อธิบดีสั่งประกาศโฆษณา"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>เมื่อเจ้าหน้าที่ตรวจคำขอถูกต้องตามระเบียบ ให้อธิบดีสั่งประกาศโฆษณาคำขอรับสิทธิบัตร</li>
+            <li>เปิดเผยให้สาธารณชนตรวจดูเพื่อใช้สิทธิคัดค้าน</li>
+          </ul>
+        </td>
+        <td>เป็นจุดเริ่มต้นนับระยะเวลา 90 วัน เพื่อให้ผู้มีส่วนได้เสียใช้สิทธิคัดค้านตาม ม.31</td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 31</span></td>
+        <td><strong>การคัดค้านคำขอ</strong><br>(Opposition)</td>
+        <td><span class="formula-text">"ผู้มีส่วนได้เสีย ยื่นคัดค้านใน 90 วัน"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>ผู้มีสิทธิคัดค้าน: <strong>"บุคคลผู้มีส่วนได้เสีย"</strong></li>
+            <li>เหตุคัดค้าน: ตนมีสิทธิดีกว่า หรือคำขอไม่ชอบด้วย ม.5, 9, 10, 11</li>
+            <li>กำหนดเวลา: ยื่นต่อพนักงานเจ้าหน้าที่<strong>ภายใน 90 วัน</strong>นับแต่วันประกาศโฆษณาตาม ม.28</li>
+          </ul>
+        </td>
+        <td>หากพ้น 90 วัน จะหมดสิทธิคัดค้านในชั้นคำขอ ต้องรอให้ออกสิทธิบัตรแล้วจึงฟ้องเพิกถอนตาม ม.54</td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 35 ทวิ</span></td>
+        <td><strong>การคุ้มครองชั่วคราว</strong><br>ระหว่างประกาศโฆษณา</td>
+        <td><span class="formula-text">"ทำหนังสือเตือน -> ได้สิทธิบัตรแล้วฟ้องย้อนหลัง"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>ระหว่างประกาศโฆษณา ยังมิใช่ผู้ทรงสิทธิบัตร ฟ้องละเมิดทันทีไม่ได้</li>
+            <li>วิธีปฏิบัติ: ผู้ขอต้องทำ<strong>หนังสือเตือนเป็นลายลักษณ์อักษร</strong></li>
+            <li>เมื่อได้รับสิทธิบัตรแล้ว จึงมีสิทธิ<strong>ฟ้องเรียกค่าเสียหายย้อนหลัง</strong>นับแต่วันที่ได้รับหนังสือเตือน</li>
+          </ul>
+        </td>
+        <td>
+          <div class="trap-box">
+            <span class="trap-title">⚠️ ข้อสอบชอบหลอก:</span><br>
+            ผู้ขอยื่นฟ้องศาลขอให้สั่งห้ามผลิตทันทีขณะประกาศโฆษณา = <strong>ฟ้องไม่ได้</strong> ต้องรอให้ออกสิทธิบัตรก่อน
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 36</span></td>
+        <td><strong>สิทธิแต่เพียงผู้เดียว</strong><br>& ข้อยกเว้นการละเมิด</td>
+        <td><span class="formula-text">"Exclusive Rights vs ข้อยกเว้น (วิจัย/สุจริตก่อนยื่น)"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li><strong>ว.หนึ่ง (สิทธิเด็ดขาด):</strong> สิทธิแต่เพียงผู้เดียวในการ ผลิต, ใช้, ขาย, มีไว้เพื่อขาย, เสนอขาย, นำเข้า</li>
+            <li><strong>ว.สอง (ข้อยกเว้น 7 อนุ):</strong> (1) ศึกษา ค้นคว้า ทดลอง วิจัย (ต้องไม่ขัดต่อการใช้ประโยชน์ปกติ) (2) ผลิตหรือใช้โดยสุจริตก่อนวันยื่นขอในไทย</li>
+          </ul>
+        </td>
+        <td>หากจำเลยอ้างข้อยกเว้นวิจัยเพื่อการค้า หรือมิได้ทำอยู่ก่อนวันยื่นขอ ย่อมเป็นการละเมิดสิทธิบัตรตาม ม.36</td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 54</span></td>
+        <td><strong>สิทธิบัตรไม่สมบูรณ์</strong><br>(โมฆะ) & การฟ้องเพิกถอน</td>
+        <td><span class="formula-text">"ขัด ม.5, 10, 11 = โมฆะ ฟ้องเพิกถอนได้"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li><strong>ว.หนึ่ง:</strong> สิทธิบัตรที่ออกโดยไม่ชอบด้วย ม.5, 9, 10, 11, 14 ให้ถือว่า<strong>ไม่สมบูรณ์ (โมฆะ)</strong></li>
+            <li><strong>ว.สอง:</strong> บุคคลใดจะกล่าวอ้างขึ้นต่อสู้ก็ได้ หรือ <strong>"บุคคลผู้มีส่วนได้เสีย"</strong> หรือ <strong>"พนักงานอัยการ"</strong> จะฟ้องต่อศาลขอให้สั่งเพิกถอนก็ได้</li>
+          </ul>
+        </td>
+        <td>อำนาจสั่งเพิกถอนสิทธิบัตรเป็นของ<strong>ศาลทรัพย์สินทางปัญญาฯ</strong> เท่านั้น มิใช่อำนาจของอธิบดีหรือคณะกรรมการ</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Page Break for Clean Printing -->
+  <div class="page-break"></div>
+
+  <!-- ==================== ข้อ 2 ==================== -->
+  <div class="section-header">
+    <span class="section-title">ข้อ 2: พ.ร.บ. สิทธิบัตร พ.ศ. 2522 — ลูกจ้างนายจ้าง & การออกแบบผลิตภัณฑ์ (7 มาตรา)</span>
+    <span class="section-badge">ม. 10, 11, 31, 56, 57, 58, 65</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 11%;">มาตรา</th>
+        <th style="width: 17%;">หัวข้อ / สาระสำคัญ</th>
+        <th style="width: 19%;">สูตรท่องจำเร็ว</th>
+        <th style="width: 35%;">คีย์เวิร์ดองค์ประกอบกฎหมาย & หลักการวินิจฉัย</th>
+        <th style="width: 18%;">ฎีกาสำคัญ / จุดตัดเกรด</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 10</span></td>
+        <td><strong>สิทธิในการขอรับสิทธิบัตร</strong><br>& การโอนคำขอ</td>
+        <td><span class="formula-text">"เป็นของผู้ประดิษฐ์ • โอนคำขอทำเป็นหนังสือ 2 ฝ่าย"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li><strong>ว.หนึ่ง:</strong> สิทธิขอรับสิทธิบัตรย่อมเป็นของ <strong>"ผู้ประดิษฐ์"</strong></li>
+            <li><strong>ว.สอง:</strong> สิทธิขอรับสิทธิบัตรย่อมโอนและรับมรดกกันได้</li>
+            <li><strong>ว.สาม:</strong> การโอนคำขอต้อง<strong>ทำเป็นหนังสือลงลายมือชื่อผู้โอนและผู้รับโอน</strong></li>
+          </ul>
+        </td>
+        <td>การโอนสิทธิในคำขอ (ม.10 ว.3) <strong>ไม่ต้องจดทะเบียนต่อพนักงานเจ้าหน้าที่</strong> แค่ทำหนังสือลงชื่อ 2 ฝ่ายก็สมบูรณ์แล้ว</td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 11</span></td>
+        <td><strong>สิทธิลูกจ้างกับนายจ้าง</strong><br>(Employee Inventions)</td>
+        <td><span class="formula-text">"จ้างประดิษฐ์ / ใช้สถิติ = สิทธิตกแก่นายจ้าง"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li><strong>ว.หนึ่ง:</strong> จ้างแรงงานหรือจ้างทำของที่มีการประดิษฐ์เป็นวัตถุประสงค์ -> สิทธิตกเป็นของ <strong>"นายจ้างหรือผู้ว่าจ้าง"</strong> (เว้นแต่ระบุไว้เป็นอย่างอื่น)</li>
+            <li><strong>ว.สอง:</strong> สัญญาจ้างมิได้ระบุการประดิษฐ์เป็นวัตถุประสงค์ แต่ประดิษฐ์โดยอาศัยวิธีการ สถิติ ข้อมูล รายงานของนายจ้าง -> สิทธิตกเป็นของ <strong>"นายจ้าง"</strong></li>
+          </ul>
+        </td>
+        <td>
+          หากลูกจ้างแอบนำผลงานไปขอรับสิทธิบัตรในนามตนเอง นายจ้างเป็นผู้มีสิทธิดีกว่า ย่อมคัดค้านได้ตาม ม.31 หรือฟ้องเพิกถอนตาม ม.54
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 31</span></td>
+        <td><strong>การคัดค้านคำขอ</strong><br>(ใช้ผ่านบทอนุโลม ม.65)</td>
+        <td><span class="formula-text">"ผู้มีส่วนได้เสีย ยื่นใน 90 วัน"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>ดึงมาใช้กับการออกแบบผลิตภัณฑ์ผ่าน ม.65 ประกอบ ม.31</li>
+            <li>นายจ้าง/ผู้มีสิทธิดีกว่า ยื่นคำคัดค้านต่อพนักงานเจ้าหน้าที่<strong>ภายใน 90 วัน</strong>นับแต่วันประกาศโฆษณาคำขอ</li>
+          </ul>
+        </td>
+        <td>เมื่อมีคำคัดค้าน นายทะเบียนต้องส่งสำเนาให้ผู้ขอแก้คำคัดค้าน และมีคำวินิจฉัยชี้ขาดสิทธิ</td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 56</span></td>
+        <td><strong>หลักเกณฑ์การออกแบบ</strong><br>(Product Design)</td>
+        <td><span class="formula-text">"ใหม่ (ม.57) + อุตสาหกรรม/หัตถกรรม (ไร้ขั้นสูง!)"</span></td>
+        <td>
+          การออกแบบผลิตภัณฑ์ที่ขอรับสิทธิบัตรได้ มี 2 เงื่อนไข:
+          <ul class="bullet-list">
+            <li>(1) เป็นการออกแบบผลิตภัณฑ์<strong>ใหม่</strong> (ตาม ม.57)</li>
+            <li>(2) เป็นการออกแบบผลิตภัณฑ์เพื่อ<strong>อุตสาหกรรมรวมทั้งหัตถกรรม</strong></li>
+            <li>คุ้มครองรูปร่าง ลวดลาย สีสันภายนอกเพื่อความสวยงาม</li>
+          </ul>
+        </td>
+        <td>
+          <div class="trap-box">
+            <span class="trap-title">⭐ จุดเน้นสำคัญ:</span><br>
+            การออกแบบผลิตภัณฑ์ <strong>"ไม่มีเงื่อนไขขั้นการประดิษฐ์สูงขึ้น"</strong> (ม.56 ไม่ได้กำหนด ม.7 ไว้)
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 57</span></td>
+        <td><strong>แบบที่ไม่ถือว่าใหม่</strong><br>& หลุมพรางสำคัญ</td>
+        <td><span class="formula-text">"4 อนุ ❌ ไร้ผ่อนผัน 12 เดือนตาม ม.6"</span></td>
+        <td>
+          แบบผลิตภัณฑ์ที่ไม่ถือว่าใหม่ 4 อนุมาตรา:
+          <ul class="bullet-list">
+            <li>(1) แพร่หลายอยู่แล้วในประเทศก่อนวันยื่นขอ</li>
+            <li>(2) <strong>เปิดเผยภาพ สาระสำคัญ ในเอกสาร/สิ่งพิมพ์ก่อนวันขอ</strong></li>
+            <li>(3) ประกาศโฆษณาแล้วตาม ม.65 ประกอบ ม.28</li>
+            <li>(4) คล้ายกับแบบผลิตภัณฑ์ดังกล่าวข้างต้นจนเห็นได้ว่าเลียนแบบ</li>
+          </ul>
+        </td>
+        <td>
+          <div class="trap-box">
+            <span class="trap-title">⚠️ จุดตัดเกรดสูงสุด:</span><br>
+            <strong>ไม่มีผ่อนผันความใหม่ 12 เดือน!</strong> นำภาพพิมพ์ลงโบรชัวร์/แคตตาล็อกแจกลูกค้าก่อนยื่นขอ แม้เพียง 1 วัน = <strong>ขาดความใหม่ทันที</strong> (ฎ.5732/2552)
+          </div>
+        </td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 58</span></td>
+        <td><strong>แบบผลิตภัณฑ์ต้องห้าม</strong></td>
+        <td><span class="formula-text">"ขัดความสงบฯ หรือศีลธรรม / กำหนดโดย พ.ร.ฎ."</span></td>
+        <td>
+          แบบผลิตภัณฑ์ที่ขอรับสิทธิบัตรไม่ได้เด็ดขาด:
+          <ul class="bullet-list">
+            <li>(1) แบบผลิตภัณฑ์ที่ขัดต่อความสงบเรียบร้อยหรือศีลธรรมอันดีของประชาชน</li>
+            <li>(2) แบบผลิตภัณฑ์ที่กำหนดโดยพระราชกฤษฎีกา</li>
+          </ul>
+        </td>
+        <td>เป็นข้อห้ามเด็ดขาดเพื่อความสงบเรียบร้อยและศีลธรรมของสังคม</td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 65</span></td>
+        <td><strong>บทอนุโลมของการออกแบบ</strong><br>(Gateway Section)</td>
+        <td><span class="formula-text">"ดึง ม.10, 11, 31 มาใช้กับการออกแบบ"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>ให้นำ ม.10 (สิทธิผู้ประดิษฐ์), ม.11 (ลูกจ้างนายจ้าง), ม.31 (การคัดค้าน 90 วัน) มาใช้บังคับแก่สิทธิบัตรการออกแบบผลิตภัณฑ์โดยอนุโลม</li>
+            <li>⭐ <strong>ไม่ดึง ม.6 วรรคท้ายมาใช้</strong> เป็นการยืนยันทางกฎหมายว่าการออกแบบผลิตภัณฑ์ไม่มีข้อยกเว้นความใหม่ 12 เดือน</li>
+          </ul>
+        </td>
+        <td>
+          <strong>สูตรเขียนปรับบท:</strong><br>
+          "ตามมาตรา 65 ประกอบมาตรา 11 วรรคหนึ่ง..." หรือ "ตามมาตรา 65 ประกอบมาตรา 31..."
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Page Break for Clean Printing -->
+  <div class="page-break"></div>
+
+  <!-- ==================== ข้อ 3 ==================== -->
+  <div class="section-header">
+    <span class="section-title">ข้อ 3: พ.ร.บ. เครื่องหมายการค้า พ.ศ. 2534 — เกณฑ์จดทะเบียน, สิทธิ & เพิกถอน (8 มาตรา)</span>
+    <span class="section-badge">ม. 6, 7, 8, 13, 44, 46, 61, 67</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 11%;">มาตรา</th>
+        <th style="width: 17%;">หัวข้อ / สาระสำคัญ</th>
+        <th style="width: 19%;">สูตรท่องจำเร็ว</th>
+        <th style="width: 35%;">คีย์เวิร์ดองค์ประกอบกฎหมาย & หลักการวินิจฉัย</th>
+        <th style="width: 18%;">ฎีกาสำคัญ / จุดตัดเกรด</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 6</span></td>
+        <td><strong>ด่านตรวจ 3 ประการ</strong><br>เพื่อรับจดทะเบียน</td>
+        <td><span class="formula-text">"บ่งเฉพาะ (ม.7) + ไม่ต้องห้าม (ม.8) + ไม่เหมือนคล้าย (ม.13)"</span></td>
+        <td>
+          เครื่องหมายการค้าอันพึงรับจดทะเบียนได้ ต้องครบทั้ง 3 ข้อ:
+          <ul class="bullet-list">
+            <li>(1) เป็นเครื่องหมายการค้าที่มี<strong>ลักษณะบ่งเฉพาะ</strong> (ตาม ม.7)</li>
+            <li>(2) <strong>ไม่มีลักษณะต้องห้าม</strong>ตาม พ.ร.บ. นี้ (ตาม ม.8)</li>
+            <li>(3) <strong>ไม่เหมือนหรือคล้าย</strong>กับเครื่องหมายของผู้อื่นที่จดไว้แล้ว (ม.13)</li>
+          </ul>
+        </td>
+        <td>เป็นประตูคัดกรอง 3 ชั้น ขาดข้อใดข้อหนึ่งนายทะเบียนต้องปฏิเสธ หากรับจดไปจะถูกเพิกถอนตาม ม.61</td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 7</span></td>
+        <td><strong>ลักษณะบ่งเฉพาะ</strong><br>(Distinctiveness)</td>
+        <td><span class="formula-text">"ในตัวเอง 11 อนุ vs จากการใช้ (ว.สาม) ⚠️ ห้ามเล็งถึงสินค้าตรงๆ"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li><strong>ว.หนึ่ง:</strong> ทำให้ผู้ซื้อเข้าใจว่าสินค้าแตกต่างจากสินค้าอื่น</li>
+            <li><strong>ว.สอง (บ่งเฉพาะในตัวเอง):</strong> (1) ชื่อตัวบุคคลธรรมดา (ฎ.6616/2560 VALENTINO) • (2) คำที่<strong>ไม่เล็งถึงลักษณะหรือคุณสมบัติของสินค้าโดยตรง</strong> • (3) คำประดิษฐ์ (A380 ฎ.936/2561)</li>
+            <li><strong>ว.สาม (บ่งเฉพาะจากการใช้):</strong> ใช้จำหน่ายจนแพร่หลายทั่วไป</li>
+          </ul>
+        </td>
+        <td>
+          <strong>ฎีกา 608/2545 (JAVACAFE):</strong><br>
+          JAVA = เกาะชวา, CAFE = กาแฟ เล็งถึงแหล่งกำเนิดและคุณสมบัติสินค้าโดยตรง ขาดลักษณะบ่งเฉพาะ จดไม่ได้
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 8</span></td>
+        <td><strong>ลักษณะต้องห้าม 13 อนุ</strong><br>(Prohibited Marks)</td>
+        <td><span class="formula-text">"แผ่นดิน - ธงชาติ - ศีลธรรม - Well-Known Mark (อนุ 10)"</span></td>
+        <td>
+          ข้อห้ามเด็ดขาดเพื่อความมั่นคงและศีลธรรม ใช้จนแพร่หลายก็ห้ามรับจด:
+          <ul class="bullet-list">
+            <li>(1)-(5) ตราแผ่นดิน ธงชาติ พระปรมาภิไธย เครื่องราชอิสริยาภรณ์</li>
+            <li>(9) ขัดต่อความสงบเรียบร้อยหรือศีลธรรมอันดีของประชาชน</li>
+            <li>(10) เหมือน/คล้ายเครื่องหมายที่มีชื่อเสียงแพร่หลายทั่วไป (Well-Known Mark) จนอาจสับสนหลงผิด</li>
+          </ul>
+        </td>
+        <td>
+          <strong>ม.8 (10) Well-Known Mark:</strong><br>
+          แบรนด์ดังระดับโลก แม้ไม่ได้จดทะเบียนในไทย ก็ห้ามใครแย่งจดทะเบียนเด็ดขาด
+        </td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 13</span></td>
+        <td><strong>เหมือนหรือคล้ายกับที่จดไว้</strong><br>(Similar / Confusing Mark)</td>
+        <td><span class="formula-text">"เหมือน/คล้าย + จำพวก/สภาพเดียวกัน + สับสนหลงผิด"</span></td>
+        <td>
+          องค์ประกอบ 3 ชั้น ห้ามรับจดทะเบียน:
+          <ul class="bullet-list">
+            <li>(1) เหมือน หรือ คล้าย กับเครื่องหมายที่ผู้อื่นจดทะเบียนไว้แล้ว</li>
+            <li>(2) ใช้กับสินค้าจำพวกเดียวกัน หรือต่างจำพวกที่มีสภาพอย่างเดียวกัน</li>
+            <li>(3) จนอาจทำให้สาธารณชนสับสนหรือหลงผิดในความเป็นเจ้าของ</li>
+          </ul>
+        </td>
+        <td>
+          <strong>เกณฑ์วินิจฉัย:</strong><br>
+          ดูจากภาพรวม (Total Impression) + สำเนียงเสียงเรียกขาน + สายตาวิญญูชนผู้ซื้อทั่วไป มิใช่วางเคียงข้างจับผิด
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 44</span></td>
+        <td><strong>สิทธิเด็ดขาด Exclusive</strong><br>ของผู้จดทะเบียน</td>
+        <td><span class="formula-text">"สิทธิแต่เพียงผู้เดียวในสินค้าที่จดทะเบียน"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>ผู้ซึ่งได้รับการจดทะเบียนเป็นเจ้าของเครื่องหมายการค้า เป็น<strong>ผู้มีสิทธิแต่เพียงผู้เดียว</strong>ในการใช้เครื่องหมายนั้นสำหรับสินค้าที่จดทะเบียนไว้</li>
+            <li>มีอำนาจฟ้องคดีละเมิดเครื่องหมายการค้า และเรียกค่าสินไหมทดแทนได้</li>
+          </ul>
+        </td>
+        <td>คุ้มครองเฉพาะจำพวกสินค้าที่ได้ระบุไว้ในคำขอและได้รับการจดทะเบียนแล้วเท่านั้น</td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 46 ว.1</span></td>
+        <td><strong>ผลของเครื่องหมายไม่จด</strong></td>
+        <td><span class="formula-text">"ไม่จด = ห้ามฟ้องละเมิด + ห้ามเรียกค่าเสียหาย"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>บุคคลใดจะฟ้องคดีเพื่อป้องกันการละเมิดเครื่องหมายการค้าที่ไม่ได้จดทะเบียน หรือเรียกร้องค่าเสียหายเพราะเหตุละเมิดไม่ได้</li>
+            <li>ไม่ได้จดทะเบียน จึงไม่มีสิทธิเด็ดขาดตาม ม.44</li>
+          </ul>
+        </td>
+        <td>เป็นบทตัดสิทธิการฟ้องคดีละเมิดเครื่องหมายการค้าโดยตรงตาม พ.ร.บ. นี้</td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 46 ว.2</span></td>
+        <td><strong>ข้อยกเว้นฟ้อง "ลวงขาย"</strong><br>(Passing Off)</td>
+        <td><span class="formula-text">"ไม่จดก็ฟ้องได้ ถ้าถูกเอาไป 'ลวงขาย' (Passing Off)"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li>ไม่กระทบกระเทือนสิทธิของเจ้าของเครื่องหมายที่ไม่ได้จดทะเบียน ในอันที่จะฟ้องคดีบุคคลอื่นซึ่งเอาสินค้าของตนไป<strong>ลวงขาย (Passing Off)</strong> ว่าเป็นสินค้าของเจ้าของเครื่องหมายการค้านั้น</li>
+            <li>คุ้มครองผู้ที่ได้ใช้เครื่องหมายการค้ากับสินค้าของตนจนติดตลาด</li>
+          </ul>
+        </td>
+        <td>
+          <div class="trap-box">
+            <span class="trap-title">⭐ หัวใจข้อสอบ (ฎ.3737/2549):</span><br>
+            ผู้คิดค้นใช้มาก่อนแม้ไม่ได้จดทะเบียน <strong>ฟ้องห้ามและเรียกค่าเสียหายฐานลวงขายได้เสมอ!</strong>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="row-even">
+        <td class="text-center"><span class="article-badge">ม. 61</span></td>
+        <td><strong>การเพิกถอนทางปกครอง</strong><br>(ต่อคณะกรรมการ)</td>
+        <td><span class="formula-text">"ขาด ม.6 หรือขัด ม.8, 13 เพิกถอนได้ตลอดเวลา"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li><strong>ผู้มีสิทธิร้อง:</strong> บุคคลผู้มีส่วนได้เสีย หรือนายทะเบียน</li>
+            <li><strong>องค์กรชี้ขาด:</strong> ร้องขอต่อ <strong>"คณะกรรมการเครื่องหมายการค้า"</strong></li>
+            <li><strong>มูลเหตุ:</strong> ขณะขอจดทะเบียน เครื่องหมายขาดลักษณะบ่งเฉพาะ ม.7 หรือต้องห้ามตาม ม.8 หรือเหมือนคล้ายตาม ม.13</li>
+            <li><strong>อายุความ:</strong> ร้องเพิกถอนได้ตลอดเวลา (ไม่มีอายุความ 5 ปี)</li>
+          </ul>
+        </td>
+        <td>เป็นการเยียวยาทางปกครอง หากคณะกรรมการมีคำสั่งอย่างไร คู่กรณีที่ไม่เห็นพ้องด้วยจึงนำคดีไปฟ้องศาลต่อไป</td>
+      </tr>
+
+      <tr>
+        <td class="text-center"><span class="article-badge">ม. 67</span></td>
+        <td><strong>ฟ้องศาลขอเพิกถอน</strong><br>โดย "ผู้มีสิทธิดีกว่า"</td>
+        <td><span class="formula-text">"ผู้ใช้มาก่อนโดยสุจริต = มีสิทธิดีกว่า ฟ้องศาลใน 5 ปี!"</span></td>
+        <td>
+          <ul class="bullet-list">
+            <li><strong>ผู้มีสิทธิฟ้อง:</strong> "บุคคลผู้มีส่วนได้เสีย" ที่แสดงได้ว่าตนมีสิทธิในเครื่องหมายการค้านั้นดีกว่า (ผู้คิดค้นและใช้มาก่อนโดยสุจริต)</li>
+            <li><strong>องค์กรชี้ขาด:</strong> ฟ้องคดีต่อ <strong>"ศาลทรัพย์สินทางปัญญาฯ"</strong></li>
+            <li><strong>กำหนดเวลาฟ้อง:</strong> ต้องฟ้อง<strong>ภายใน 5 ปี</strong>นับแต่วันที่นายทะเบียนมีคำสั่งให้จดทะเบียน (ม.40)</li>
+          </ul>
+        </td>
+        <td>
+          <div class="trap-box">
+            <span class="trap-title">⭐ สูตรชนะคดี (ฎ.2125/2557 & ฎ.8034/2544 UNIOR):</span><br>
+            1. ฟ้องศาลสั่งเพิกถอนตาม <strong>ม.67</strong> (ใน 5 ปี)<br>
+            2. ฟ้องเรียกค่าเสียหายฐาน <strong>"ลวงขาย" ตาม ม.46 ว.2</strong> ได้เสมอ!
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Blueprint Section -->
+  <div class="blueprint-card">
+    <div class="blueprint-title">✍️ พิมพ์เขียวสูตรการเขียนตอบข้อสอบอุทาหรณ์มาตรฐาน 4 ท่อน (IRAC Framework)</div>
+    <div class="blueprint-grid">
+      <div class="blueprint-step">
+        <strong>1. ท่อนประเด็น (Issue)</strong>
+        "กรณีตามปัญหา มีประเด็นที่ต้องวินิจฉัยว่า... [ตั้งคำถามตามที่โจทย์ถามให้ครบทุกประเด็น เช่น มีสิทธิได้รับสิทธิบัตรหรือไม่ / สิทธิตกเป็นของใคร / มีอำนาจฟ้องหรือไม่]"
+      </div>
+      <div class="blueprint-step">
+        <strong>2. ท่อนหลักกฎหมาย (Rule)</strong>
+        "ตามพระราชบัญญัติ... พ.ศ. ... มีบทบัญญัติที่เกี่ยวข้องดังนี้..." [อ้างเฉพาะมาตราที่ตรงกับประเด็น ยกหลักเกณฑ์และข้อยกเว้นให้ครบถ้วน ห้ามอ้างมาตรานอกขอบเขต]
+      </div>
+      <div class="blueprint-step">
+        <strong>3. ท่อนปรับบท (Application)</strong>
+        "กรณีตามปัญหา ข้อเท็จจริงปรากฏว่า..." [นำข้อเท็จจริงในโจทย์มาเทียบองค์ประกอบทีละข้อ ชี้ประเด็นตัดเกรด เช่น ม.6 ว.ท้าย / ม.11 ว.1 / ม.57(2) / ม.46 ว.2]
+      </div>
+      <div class="blueprint-step">
+        <strong>4. ท่อนสรุปและฟันธง (Conclusion)</strong>
+        "วินิจฉัยว่า..." หรือ "ดังนั้น สรุปได้ว่า..." [ตอบคำถามให้ตรงและครบทุกข้อตามที่ตั้งไว้ในท่อนประเด็น ฟันธงชัดเจน สั้น กระชับ แม่นยำ ไม่ลังเล]
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-notice">
+    จัดทำสำหรับเตรียมสอบวิชากฎหมายทรัพย์สินทางปัญญา สอบวันที่ 26 กันยายน 2569 • ขอบเขตแม่บท 24 มาตราตามคำชี้แจงอาจารย์ผู้สอน 100%
+  </div>
+
+</body>
+</html>

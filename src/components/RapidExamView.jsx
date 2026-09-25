@@ -188,6 +188,18 @@ export default function RapidExamView({
                 <Printer className="w-4 h-4" />
                 <span>พิมพ์หน้านี้ (Print)</span>
               </button>
+
+              <a
+                href="./ip-law-exam-summary-bw.pdf"
+                download="ตารางสรุป_Keyword_และสูตรจำเร็ว_ขาวดำ.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1.5 transition-all hover:scale-105 no-print"
+                title="ดาวน์โหลดตารางสรุปขาว-ดำ สำหรับพิมพ์ A4"
+              >
+                <FileText className="w-4 h-4" />
+                <span>📄 โหลด PDF ขาว-ดำ (พร้อมพิมพ์)</span>
+              </a>
             </div>
 
             {/* Sub-tab view switchers */}
