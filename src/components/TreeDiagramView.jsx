@@ -155,7 +155,7 @@ export default function TreeDiagramView({ onNavigateToCategory, onOpenArticleMod
                   ผังตรรกะเชื่อมโยง 3 ข้อสอบ (Interactive Mind Map)
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
-                  แผนภูมิความเชื่อมโยงของ 23 มาตราแม่บท พร้อมปุ่มคลิกข้ามไปยังข้อสอบนั้นได้ทันที
+                  แผนภูมิความเชื่อมโยงของ 24 มาตราตามคำชี้แจงสอบ พร้อมปุ่มคลิกข้ามไปยังข้อสอบนั้นได้ทันที
                 </p>
               </div>
             </div>

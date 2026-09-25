@@ -12,6 +12,7 @@ import ArticleModal from './components/ArticleModal';
 import SearchResults from './components/SearchResults';
 import AudioPlayerBar from './components/AudioPlayerBar';
 import StudyScheduleView from './components/StudyScheduleView';
+import RapidExamView from './components/RapidExamView';
 import { patentCategories } from './data/patentData';
 import { BookOpen, Sparkles, Target } from 'lucide-react';
 
@@ -23,8 +24,8 @@ export default function App() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
-  // Active navigation tab (Default to Question 1)
-  const [activeTab, setActiveTab] = useState('q1');
+  // Active navigation tab (Default to the new Rapid Exam Topic 1)
+  const [activeTab, setActiveTab] = useState('rapid_q1');
 
   // Search query
   const [searchQuery, setSearchQuery] = useState('');
@@ -308,6 +309,14 @@ export default function App() {
 
             {/* Main Content Area */}
             <div className="flex-1 w-full min-w-0">
+              {['rapid_q1', 'rapid_q2', 'rapid_q3'].includes(activeTab) && (
+                <RapidExamView
+                  topicId={activeTab}
+                  onSelectTopic={(t) => setActiveTab(t)}
+                  onPlayAudio={playAudio}
+                />
+              )}
+
               {currentCategory && (
                 <PatentSection
                   category={currentCategory}
@@ -372,7 +381,7 @@ export default function App() {
               คู่มือเตรียมสอบกฎหมายทรัพย์สินทางปัญญา สอบ 26 ก.ย. 69
             </span>
             <span className="text-slate-400">|</span>
-            <span>3 เสาหลักข้อสอบ (23 มาตราแม่บท)</span>
+            <span>3 เสาหลักข้อสอบ (24 มาตราตรงตามคำชี้แจงสอบ)</span>
           </div>
           <div>
             พัฒนาด้วย React 19 + Tailwind CSS พร้อมระบบเสียงอ่าน TTS และ IRAC Drills

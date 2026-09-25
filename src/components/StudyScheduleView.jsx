@@ -91,7 +91,7 @@ export default function StudyScheduleView({ onNavigateTab }) {
       day: 6,
       dateLabel: "วันที่ 6 (D-1)",
       title: "ทดลองสอบจำลองรวม 3 ข้อ (Mock Exam Drill)",
-      articles: "ครอบคลุมครบ 23 มาตราแม่บท",
+      articles: "ครอบคลุมครบ 24 มาตราตามคำชี้แจงสอบ",
       color: "purple",
       tasks: [
         { id: "d6-t1", text: "ทำข้อสอบ Mini Quiz รวมทุกหมวดจับเวลา (ผ่านเกณฑ์ 90% ขึ้นไป)", linkTab: "quiz" },
@@ -104,8 +104,8 @@ export default function StudyScheduleView({ onNavigateTab }) {
     {
       day: 7,
       dateLabel: "วันที่ 7 (วันก่อนสอบ)",
-      title: "ทบทวนจุดตาย & สูตรช่วยจำ 23 มาตรา (Final Polish)",
-      articles: "23 มาตราแม่บท (เตรียมพร้อมเข้าห้องสอบ)",
+      title: "ทบทวนจุดตาย & สูตรช่วยจำ 24 มาตรา (Final Polish)",
+      articles: "24 มาตราตามคำชี้แจงสอบ (เตรียมพร้อมเข้าห้องสอบ)",
       color: "emerald",
       tasks: [
         { id: "d7-t1", text: "กวาดสายตาดู Mind Map ความเชื่อมโยงของทั้ง 3 ข้อสอบ 1 รอบใหญ่", linkTab: "tree" },
@@ -157,7 +157,7 @@ export default function StudyScheduleView({ onNavigateTab }) {
               แผนติวเข้ม 7 วันสู่ชัยชนะในห้องสอบ
             </h1>
             <p className="text-sm text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
-              ตารางเรียนรู้และทบทวนอย่างเป็นระบบวันต่อวัน ครอบคลุม 3 เสาหลักข้อสอบ (23 มาตราแม่บท) เช็คความพร้อมและบันทึกความก้าวหน้าอัตโนมัติ
+              ตารางเรียนรู้และทบทวนอย่างเป็นระบบวันต่อวัน ครอบคลุม 3 เสาหลักข้อสอบ (24 มาตราตรงตามคำชี้แจงสอบ) เช็คความพร้อมและบันทึกความก้าวหน้าอัตโนมัติ
             </p>
           </div>
 

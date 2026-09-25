@@ -82,7 +82,7 @@ export default function FlashcardViewer({ onPlayAudio }) {
                 <Layers className="w-5 h-5" />
               </div>
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-                Flashcards ท่องจำ 3 เสาหลักข้อสอบ (23 มาตรา)
+                Flashcards ท่องจำ 3 เสาหลักข้อสอบ (24 มาตราตามคำชี้แจงสอบ)
               </h2>
             </div>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">

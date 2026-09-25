@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { quickSummaryData } from '../data/quickSummaryData';
 import { 
   ChevronDown, 
   ChevronUp, 
@@ -18,7 +19,11 @@ import {
   RotateCcw,
   AlertCircle,
   Loader2,
-  CheckCheck
+  CheckCheck,
+  Zap,
+  HelpCircle,
+  FileText,
+  Gavel
 } from 'lucide-react';
 
 export default function PatentSection({ 
@@ -31,6 +36,10 @@ export default function PatentSection({
   onResetCategory,
   saveStatus
 }) {
+  // Quick Summary toggle (default true for fast revision)
+  const [showQuickSummary, setShowQuickSummary] = useState(true);
+  const [activeIracIdx, setActiveIracIdx] = useState(0);
+
   const [expandedSteps, setExpandedSteps] = useState({
     1: true,
     2: true,
@@ -353,6 +362,225 @@ export default function PatentSection({
           </div>
         )}
       </div>
+
+      {/* ⚡ Quick Study Guide & Cheat Sheet Component */}
+      {quickSummaryData[category.id] && (
+        <div className="glass-card rounded-2xl p-6 border border-amber-200/80 dark:border-amber-900/60 bg-gradient-to-br from-amber-50/50 via-white to-amber-50/20 dark:from-amber-950/20 dark:via-slate-900 dark:to-slate-950/50 shadow-sm space-y-6">
+          
+          {/* Header of Quick Summary */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-amber-200/60 dark:border-amber-900/40">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-amber-500 text-white shadow-md shadow-amber-500/20">
+                <Zap className="w-5 h-5 fill-current" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                    {quickSummaryData[category.id].title}
+                  </h3>
+                  <span className="text-xs px-2.5 py-0.5 font-bold rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
+                    ท่องจำด่วน 20:00 - 24:00 น.
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  {quickSummaryData[category.id].badge}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => {
+                  if (onPlayAudio) {
+                    const qData = quickSummaryData[category.id];
+                    const keywordsText = qData.coreKeywords.map(k => `${k.article} ${k.name} คีย์เวิร์ด ${k.keyword}. ${k.desc}`).join('. ');
+                    const fullSummaryText = `${qData.title}. สาระสำคัญมีดังนี้. ${keywordsText}`;
+                    onPlayAudio(fullSummaryText, qData.title);
+                  }
+                }}
+                className="flex items-center gap-1.5 text-xs px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold shadow-md shadow-amber-500/20 transition-all active:scale-95"
+                title="ฟังเสียงอ่านสรุปเร่งรัดและคีย์เวิร์ดประจำข้อนี้"
+              >
+                <Volume2 className="w-4 h-4" />
+                <span>ฟังเสียงสรุปข้อนี้ (TTS)</span>
+              </button>
+
+              <button
+                onClick={() => setShowQuickSummary(prev => !prev)}
+                className="flex items-center gap-1 text-xs px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+              >
+                {showQuickSummary ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                <span>{showQuickSummary ? 'ซ่อนสรุป' : 'เปิดดูสรุป'}</span>
+              </button>
+            </div>
+          </div>
+
+          {showQuickSummary && (
+            <div className="space-y-6 pt-2 animate-in fade-in duration-300">
+              
+              {/* Mindset Flowchart */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                    <Scale className="w-3.5 h-3.5 text-amber-500" />
+                    แผนผังตรรกะเชื่อมโยงมาตรา (Mindset Map)
+                  </h4>
+                  <button
+                    onClick={() => handleCopy(quickSummaryData[category.id].mindmap, 'mindmap')}
+                    className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400"
+                  >
+                    {copiedId === 'mindmap' ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedId === 'mindmap' ? 'คัดลอกแล้ว' : 'คัดลอกแผนผัง'}</span>
+                  </button>
+                </div>
+                <pre className="p-4 rounded-xl bg-slate-900 text-amber-300 font-mono text-xs overflow-x-auto leading-relaxed border border-slate-800 shadow-inner">
+                  {quickSummaryData[category.id].mindmap}
+                </pre>
+              </div>
+
+              {/* Core Keywords Grid */}
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5 text-indigo-500" />
+                  คัมภีร์ย่อมาตรา & คีย์เวิร์ดท่องจำ (One-Page Keywords)
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {quickSummaryData[category.id].coreKeywords.map((kw, idx) => (
+                    <div 
+                      key={idx}
+                      className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all group shadow-2xs"
+                    >
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <span 
+                          onClick={() => onOpenArticleModal && onOpenArticleModal(kw.article)}
+                          className="text-xs px-2 py-0.5 font-mono font-bold rounded-md bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 cursor-pointer hover:underline"
+                        >
+                          {kw.article}
+                        </span>
+                        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                          {kw.name}
+                        </span>
+                      </div>
+                      <div className="mb-1.5">
+                        <span className="text-xs font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-2 py-0.5 rounded-md border border-amber-200 dark:border-amber-900/60 inline-block">
+                          🔑 {kw.keyword}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                        {kw.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Landmark Cases */}
+              {quickSummaryData[category.id].landmarkCases && quickSummaryData[category.id].landmarkCases.length > 0 && (
+                <div className="space-y-3">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                    <Gavel className="w-3.5 h-3.5 text-rose-500" />
+                    คำพิพากษาศาลฎีกาตรงจุดเน้นของอาจารย์ (Landmark Cases)
+                  </h4>
+                  <div className="space-y-2">
+                    {quickSummaryData[category.id].landmarkCases.map((cs, idx) => (
+                      <div 
+                        key={idx}
+                        className="p-3 rounded-xl bg-rose-50/40 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 text-xs text-slate-700 dark:text-slate-300 space-y-1"
+                      >
+                        <span className="font-bold text-rose-700 dark:text-rose-300">
+                          📌 {cs.caseNo}:
+                        </span>
+                        <p className="leading-relaxed pl-4 border-l-2 border-rose-300 dark:border-rose-700">
+                          {cs.summary}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* IRAC Drills (Interactive Exam Simulation) */}
+              {quickSummaryData[category.id].iracDrills && (
+                <div className="space-y-3 pt-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                      <FileText className="w-3.5 h-3.5 text-emerald-500" />
+                      เก็งข้อสอบจริง & แนวทางเขียนตอบ 3 สเต็ป (IRAC Formula)
+                    </h4>
+                    <div className="flex items-center gap-1.5">
+                      {quickSummaryData[category.id].iracDrills.map((drill, dIdx) => (
+                        <button
+                          key={dIdx}
+                          onClick={() => setActiveIracIdx(dIdx)}
+                          className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-all ${
+                            activeIracIdx === dIdx
+                              ? 'bg-emerald-600 text-white shadow-xs'
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                          }`}
+                        >
+                          ข้อเก็ง {dIdx + 1}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {(() => {
+                    const activeDrill = quickSummaryData[category.id].iracDrills[activeIracIdx];
+                    if (!activeDrill) return null;
+                    return (
+                      <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-800/60 shadow-xs space-y-3">
+                        <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
+                          <h5 className="text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                            🚩 {activeDrill.title}
+                          </h5>
+                          <button
+                            onClick={() => {
+                              if (onPlayAudio) {
+                                const fullIrac = `${activeDrill.title}. ข้อเท็จจริง: ${activeDrill.facts}. ข้อกฎหมาย: ${activeDrill.law}. วินิจฉัย: ${activeDrill.analysis}. สรุปฟันธง: ${activeDrill.conclusion}`;
+                                onPlayAudio(fullIrac, activeDrill.title);
+                              }
+                            }}
+                            className="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 hover:underline font-medium"
+                          >
+                            <Volume2 className="w-3 h-3" />
+                            <span>ฟังแนวตอบข้อนี้</span>
+                          </button>
+                        </div>
+
+                        <div className="space-y-2 text-xs">
+                          <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800">
+                            <span className="font-bold text-slate-700 dark:text-slate-300">📋 ข้อเท็จจริง: </span>
+                            <span className="text-slate-600 dark:text-slate-400">{activeDrill.facts}</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-lg bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/40">
+                            <span className="font-bold text-indigo-700 dark:text-indigo-300">1. วางหลักกฎหมาย (I): </span>
+                            <span className="text-indigo-600 dark:text-indigo-400 font-mono font-semibold">{activeDrill.law}</span>
+                          </div>
+
+                          <div className="p-2.5 rounded-lg bg-amber-50/50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/40">
+                            <span className="font-bold text-amber-800 dark:text-amber-300">2. วินิจฉัยปรับบท (A): </span>
+                            <p className="text-slate-700 dark:text-slate-300 whitespace-pre-line mt-1 pl-2 border-l-2 border-amber-400">
+                              {activeDrill.analysis}
+                            </p>
+                          </div>
+
+                          <div className="p-2.5 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800">
+                            <span className="font-bold text-emerald-800 dark:text-emerald-300">3. สรุปฟันธง (C): </span>
+                            <span className="text-emerald-700 dark:text-emerald-300 font-semibold">{activeDrill.conclusion}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
+
+            </div>
+          )}
+
+        </div>
+      )}
 
       {/* 6 Steps Content Flow */}
       <div className="space-y-4">

@@ -46,7 +46,7 @@ export default function Navbar({
                 </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">
-                คู่มือเตรียมสอบเจาะลึก 3 เสาหลักข้อสอบ (23 มาตราแม่บท)
+                คู่มือเตรียมสอบเจาะลึก 3 เสาหลักข้อสอบ (24 มาตราตรงตามคำชี้แจงสอบ)
               </p>
             </div>
           </div>
